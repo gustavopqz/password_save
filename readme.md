@@ -1,4 +1,4 @@
-## Web application that saves your password in a cloud database
+# Web application that saves your passwords in a cloud database
 
 ## Nedded:
 - express

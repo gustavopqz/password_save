@@ -38,7 +38,7 @@ app.get('/data/:id', async (req, res)=>{
 })
 
 //Rota get por owner
-app.get('/owner/:owner', async (req, res)=>{
+app.get('/data/:owner', async (req, res)=>{
     const owner = req.params.owner
     if(!owner){
         res.status(422).json({message: 'There is not a user like this!'})
@@ -48,7 +48,7 @@ app.get('/owner/:owner', async (req, res)=>{
 })
 
 //Rota post
-app.post('/login', async (req, res) => {
+app.post('/data/create', async (req, res) => {
     const { plataform, owner, user, password, date } = req.body
 
     const login = {
@@ -68,7 +68,7 @@ app.post('/login', async (req, res) => {
 })
 
 //UPDATE POR ID
-app.patch('/data/:id', async (req, res)=>{
+app.patch('/data/update/:id', async (req, res)=>{
     const id = req.params.id
 
     const {plataform, owner, user, password, date} = req.body
@@ -97,7 +97,7 @@ app.patch('/data/:id', async (req, res)=>{
 })
 
 //DELETE POR ID
-app.delete('/data/:id', async (req, res)=>{
+app.delete('/data/delete/:id', async (req, res)=>{
     const id = req.params.id
 
     try {
