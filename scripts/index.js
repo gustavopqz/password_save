@@ -31,3 +31,17 @@ async function getAll(){
     const data = await response.json()
     console.log(data)
 }
+
+async function deleteAll(){
+    let getUsers = await fetch('http://localhost:3000/data')
+    let usersJSON = await getUsers.json()
+    let response = ''
+    let data = ''
+    for (let index in usersJSON){
+        response = await fetch('http://localhost:3000/data/delete/' + usersJSON[index]['_id'],{
+            method: 'delete'
+        })
+        data = await response.json()
+        console.log(data)
+    }
+}

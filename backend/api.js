@@ -3,7 +3,6 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 require('dotenv').config()
-const bcrypt = require(`bcryptjs`)
 
 //Require no model criado
 const Login = require('../models/Login')
