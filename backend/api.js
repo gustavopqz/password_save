@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 require('dotenv').config()
+const bcrypt = require(`bcryptjs`)
 
 //Require no model criado
 const Login = require('../models/Login')
@@ -51,16 +52,20 @@ app.get('/data/:owner', async (req, res)=>{
 app.post('/data/create', async (req, res) => {
     const { plataform, owner, user, password, date } = req.body
 
-    const login = {
+    //Create password hash
+    const salt = await bcrypt.genSalt(12)
+    const passwordHash = await bcrypt.hash(password, salt)
+
+    const createLogin = {
         plataform,
         owner,
         user,
-        password,
+        password: passwordHash,
         date
     }
 
     try {
-        await Login.create(login)
+        await Login.create(createLogin)
         res.status(201).json({ message: 'User created!' })
     } catch (error) {
         res.status(500).json({ error: error })

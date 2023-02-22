@@ -48,7 +48,7 @@
                 return
             }
 
-            fetch('http://localhost:3000/login',{
+            fetch('http://localhost:3000/data/create',{
                 method: 'post',
                 body: JSON.stringify({
                     plataform: plataform,
@@ -98,10 +98,7 @@
             let data = await response.json()
             let resultado = ''
 
-            for(index in data){
-                resultado += ``
-            }
-            getAll.innerHTML = resultado
+            console.log(data)
         })
         
     </script>
