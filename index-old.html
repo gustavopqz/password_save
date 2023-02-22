@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/all.css">
+    <title>Senhas</title>
+</head>
+<body>
+    <img src="./assets/img/big_data_bg.jpg" alt="background"/>
+    <div id="main">
+        <form id="form">
+            <input type="text" name="plataform" id="plataform" placeholder="Plataform">
+            <input type="text" name="owner" id="owner" placeholder="Owner">
+            <input type="text" name="user" id="user" placeholder="User">
+            <input type="text" name="password" id="password" placeholder="Password">
+            <input type="text" name="date" id="date" style="display: none;">
+            <button type="submit">Add</button>
+        </form>
+    
+        <form id="form2">
+            <input type="text" name="id" id="id" placeholder="Id to delete">
+            <label for="id">Id to delete</label>
+            <input type="submit" name="submit" id="submit">
+        </form>
+    
+        <button  id="get">GET ALL</button>
+        <p id="getAll"></p>
+    </div>
+    <script>
+        now = new Date
+        document.getElementById('date').value = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`
+
+        let form = document.getElementById('form')
+
+        
+        
+        form.addEventListener('submit',function(e){
+            let plataform = document.getElementById('plataform').value
+            let owner = document.getElementById('owner').value
+            let user = document.getElementById('user').value
+            let password = document.getElementById('password').value
+            let date = document.getElementById('date').value
+            e.preventDefault()
+            if(!plataform || !owner || !user || !password || !date){
+                console.log('Informações incompletas')
+                return
+            }
+
+            fetch('http://localhost:3000/data/create',{
+                method: 'post',
+                body: JSON.stringify({
+                    plataform: plataform,
+                    owner: owner,
+                    user: user,
+                    password: password,
+                    date: date
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            })
+            .then((response)=> console.log(response.status))
+            .catch((error)=> console.log(error))
+        })
+
+        let form2 = document.querySelector('#form2')
+
+        form2.addEventListener('submit', function (e){
+            e.preventDefault()
+            let id = document.querySelector('#id').value
+            
+            if(!id){
+                console.log('Id não digitado.')
+                return
+            }
+
+            fetch(`http://localhost:3000/data/${id}`, {
+                method: 'delete'
+            })
+            .then((response) => {
+                if(response.status == 200){
+                    alert('Deletado com sucesso!')
+                }
+                return response.json()})
+            .then((json) => console.log(json.message))
+            .catch((error) => console.log(error))
+
+            document.querySelector('#id').value = ''
+        })
+
+        let buttonGet = document.querySelector('#get') 
+        let getAll = document.getElementById('getAll')
+
+        buttonGet.addEventListener('click', async ()=>{
+            let response = await fetch('http://localhost:3000/data')
+            let data = await response.json()
+            let resultado = ''
+
+            console.log(data)
+        })
+        
+    </script>
+</body>
+</html>

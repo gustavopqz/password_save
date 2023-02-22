@@ -52,21 +52,17 @@ app.get('/data/:owner', async (req, res)=>{
 app.post('/data/create', async (req, res) => {
     const { plataform, owner, user, password, date } = req.body
 
-    //Create password hash
-    const salt = await bcrypt.genSalt(12)
-    const passwordHash = await bcrypt.hash(password, salt)
-
     const createLogin = {
         plataform,
         owner,
         user,
-        password: passwordHash,
+        password,
         date
     }
 
     try {
         await Login.create(createLogin)
-        res.status(201).json({ message: 'User created!' })
+        res.status(201).json({ message: 'User created!', user: createLogin})
     } catch (error) {
         res.status(500).json({ error: error })
     }

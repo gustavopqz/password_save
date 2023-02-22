@@ -2,17 +2,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-img{
-    position: absolute;
-    width: 100%;
-    max-height: 100vh;
-    opacity: 0.85;
-    z-index: 1;
-}
-
-#main{
-    position: relative;
-    z-index: 2;
+body{
+    background-image: url('../img/big_data_bg.jpg');
+    background-size: cover;
 }
